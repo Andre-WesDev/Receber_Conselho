@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conselhos</title>
+    <style>
+        #resultado{
+            padding: 10px;
+            margin-top: 10px;
+            max-width: 335px;
+            background-color: #397575;
+            color: #fff;
+            font-size: 25px;
+            border: 2px solid #000000;
+            border-radius: 10px;
+            box-shadow: 2px 2px 2px #000000;
+        }
+    </style>
+</head>
+<body>
+    <h1> Precisa de um conselho? Eu posso te ajudar!</h1>
+
+    <button type="button" onclick="consulend()">Receber Conselho</button>
+
+    <div id="resultado">
+        <p>Seu Conselho aqui...</p>
+    </div>
+
+
+<script>
+    function consulend(){
+        
+        let url = `https://api.adviceslip.com/advice`;
+
+        fetch(url).then(function(response){
+            response.json().then(apresentardados);
+        })
+    }
+
+    function apresentardados(dados){
+
+        console.log(dados);
+      let  resultado = document.querySelector("#resultado");
+
+      if(dados.erro){
+
+          resultado.innerHTML = `<p>Não foi possível achar um conselho associado a esse número. Informe outro!</p>`;
+
+      }else{
+
+        resultado.innerHTML = `<p>Conselho: ${dados.slip.advice}</p>`
+      }
+    }
+</script>
+</body>
+</html>
